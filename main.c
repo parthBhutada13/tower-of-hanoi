@@ -43,7 +43,7 @@ void printRod() {
 void display() {
     system("cls");
 
-    printf("=== tower of hanoi ===\n\n");
+    printf("=== tower of hanoi === \n\n");
 
     for (int r = 0; r < RODS; r++) {
         printf("rod %d:\n\n", r + 1);
@@ -75,12 +75,12 @@ int moveDisk(int disk, int toRod) {
     int fromRod;
 
     if (!findDisk(disk, &fromRod)) {
-        printf("invalid move! disk %d is not on top.\n", disk);
+        printf("invalid move, disk %d is not on top.\n", disk);
         return 0;
     }
 
     if (top[toRod] != -1 && rods[toRod][top[toRod]] < disk) {
-        printf("illegal move! larger disk on smaller disk.\n");
+        printf("illegal move, larger disk on smaller disk.\n");
         return 0;
     }
 
@@ -92,8 +92,6 @@ int moveDisk(int disk, int toRod) {
 
     return 1;
 }
-
-
 
 int main() {
     char input;
@@ -132,9 +130,9 @@ int main() {
     }
 
     if (top[2] == n - 1) {
-        printf("\ncongratulations! you moved all disks to rod 3!\n");
+        printf("\ncongratulations, you moved all disks to rod 3.\n");
         printf("you completed the game in %d moves.\n", moves);
     }
 
-    return 0; 
+    return 0;
 }
