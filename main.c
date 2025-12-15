@@ -11,3 +11,84 @@ int top[RODS];
 int n;
 int moves = 0;
 int maxMoves;
+
+void initialize() {
+    for (int i = 0; i < RODS; i++)
+        top[i] = -1;
+
+    for (int i = n; i >= 1; i--)
+        rods[0][++top[0]] = i;
+}
+
+void printCenteredDisk(int size) {
+    int diskWidth = size * 2;
+    int padding = (BASE_WIDTH - diskWidth) / 2;
+
+    for (int i = 0; i < padding; i++)
+        printf(" ");
+
+    for (int i = 0; i < diskWidth; i++)
+        printf("=");
+
+    printf("\n");
+}
+
+void printRod() {
+    int padding = BASE_WIDTH / 2;
+    for (int i = 0; i < padding; i++)
+        printf(" ");
+    printf("|\n");
+}
+
+void display() {
+    system("cls");
+
+    printf("=== tower of hanoi ===\n\n");
+
+    for (int r = 0; r < RODS; r++) {
+        printf("rod %d:\n\n", r + 1);
+
+        if (top[r] == -1) {
+            printRod();
+        } else {
+            for (int i = top[r]; i >= 0; i--) {
+                printCenteredDisk(rods[r][i]);
+            }
+            printRod();
+        }
+
+        printf("\n");
+    }
+}
+
+int findDisk(int disk, int *rodIndex) {
+    for (int r = 0; r < RODS; r++) {
+        if (top[r] != -1 && rods[r][top[r]] == disk) {
+            *rodIndex = r;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int moveDisk(int disk, int toRod) {
+    int fromRod;
+
+    if (!findDisk(disk, &fromRod)) {
+        printf("invalid move! disk %d is not on top.\n", disk);
+        return 0;
+    }
+
+    if (top[toRod] != -1 && rods[toRod][top[toRod]] < disk) {
+        printf("illegal move! larger disk on smaller disk.\n");
+        return 0;
+    }
+
+    rods[fromRod][top[fromRod]--] = 0;
+    rods[toRod][++top[toRod]] = disk;
+
+    printf("moved disk %d from rod %d to rod %d\n",
+           disk, fromRod + 1, toRod + 1);
+
+    return 1;
+}
