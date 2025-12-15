@@ -92,3 +92,49 @@ int moveDisk(int disk, int toRod) {
 
     return 1;
 }
+
+
+
+int main() {
+    char input;
+    int disk, toRod;
+
+    printf("enter the number of disks (1 to %d): ", MAX);
+    scanf("%d", &n);
+
+    maxMoves = pow(2, n) - 1;
+
+    initialize();
+    display();
+
+    while (top[2] != n - 1 && moves < maxMoves) {
+        printf("\nenter the disk number to move (1 to %d) or 'q' to quit: ", n);
+        scanf(" %c", &input);
+
+        if (input == 'q')
+            break;
+
+        disk = input - '0';
+
+        printf("enter the rod number to move to (1, 2, or 3): ");
+        scanf("%d", &toRod);
+        toRod--;
+
+        if (toRod < 0 || toRod > 2) {
+            printf("invalid rod number!\n");
+            continue;
+        }
+
+        if (moveDisk(disk, toRod)) {
+            moves++;
+            display();
+        }
+    }
+
+    if (top[2] == n - 1) {
+        printf("\ncongratulations! you moved all disks to rod 3!\n");
+        printf("you completed the game in %d moves.\n", moves);
+    }
+
+    return 0; 
+}
